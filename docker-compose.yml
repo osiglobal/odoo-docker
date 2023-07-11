@@ -10,8 +10,12 @@ services:
     restart: always             # run as a service
     volumes:
         - ./postgresql:/var/lib/postgresql/data
+    networks:
+      odoo_network:
+        aliases:
+          - db
 
-  odoo16:
+  odoo:
     image: odoo:16
     user: root
     depends_on:
@@ -32,4 +36,14 @@ services:
       - ./addons:/mnt/extra-addons
       - ./etc:/etc/odoo
     restart: always             # run as a service
+    networks:
+      odoo_network:
+        aliases:
+          - odoo
+networks:
+  odoo_network:
+    name: proxy_swag_network
+    external: true
+
+          
     
